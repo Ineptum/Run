@@ -486,7 +486,7 @@ def play(screen):
         player2.move(time_delta)
 
         if finished and playable:
-            result = f"Player {finished[0]} has won!" if len(
+            result = ("Player" + str(finished[0]) + "has won!") if len(
                 finished) == 1 else "draw!"
             playable = False
             SCORE[1] += 1 in finished
@@ -594,13 +594,13 @@ def next_level(gamestart=False):
 
     for sprite in all_sprites:
         sprite.rect.x += displace
-    finish_screen(["Game Over!", play(screen), f"{SCORE[1]} : {SCORE[2]}",
+    finish_screen(["Game Over!", play(screen), str(SCORE[1]) + ": " str(SCORE[2]),
                    "Any button to continue"], screen)
 
 
 if __name__ == "__main__":
     current_level = 0
-    levels = [f"level{i}.txt" for i in range(1, 3)]
+    levels = ["level" + str(i) + ".txt" for i in range(1, 3)]
 
     pygame.init()
 
