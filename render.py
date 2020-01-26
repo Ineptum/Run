@@ -10,7 +10,6 @@ inverted = [0, 0]
 
 
 def load_level(filename):
-    filename = "data/" + filename
     with open(filename) as mapFile:
         level_map = [line.rstrip() for line in mapFile]
 
@@ -71,7 +70,7 @@ def generate_level(level):
 
 def load_image(name, colorkey=None):
     try:
-        image = pygame.image.load("data/" + name)
+        image = pygame.image.load(name)
     except Exception as exception:
         print("Cannot load image: {}".format(name))
         raise SystemExit(exception)
@@ -568,7 +567,7 @@ def finish_screen(outro_text, screen):
 
 def next_level(gamestart=False):
     global finish, level, level_width, level_height, player1, player2, all_sprites, player_group, tile_group, finish_group, tile_width, displace, width
-    comp = pygame.mixer.Sound("data/bptsm.wav")
+    comp = pygame.mixer.Sound("bptsm.wav")
     comp.play()
     level, level_width, level_height = load_level(levels[current_level])
 
