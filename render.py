@@ -571,9 +571,9 @@ def next_level(gamestart=False):
 
     # display_info = pygame.display.Info()
     # width, height = ((display_info.current_h, display_info.current_h))
-    width, height = 800, 800
+    width, height = 400, 400
     screen = pygame.display.set_mode((width, height), pygame.HWSURFACE |
-                                     pygame.DOUBLEBUF | pygame.RESIZABLE)
+                                     pygame.DOUBLEBUF | pygame.FULLSCREEN)
 
     width_fraction = 0.9
     displace = (width - int(width_fraction * width)) // 2
