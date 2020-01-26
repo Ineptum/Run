@@ -571,7 +571,7 @@ def next_level(gamestart=False):
 
     # display_info = pygame.display.Info()
     # width, height = ((display_info.current_h, display_info.current_h))
-    width, height = 400, 400
+    width, height = 600, 600
     screen = pygame.display.set_mode((width, height), pygame.HWSURFACE |
                                      pygame.DOUBLEBUF | pygame.FULLSCREEN)
 
