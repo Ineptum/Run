@@ -594,7 +594,7 @@ def next_level(gamestart=False):
 
     for sprite in all_sprites:
         sprite.rect.x += displace
-    finish_screen(["Game Over!", play(screen), str(SCORE[1]) + ": " str(SCORE[2]),
+    finish_screen(["Game Over!", play(screen), str(SCORE[1]) + ": " + str(SCORE[2]),
                    "Any button to continue"], screen)
 
 
