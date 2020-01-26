@@ -9,7 +9,6 @@ inverted = [0, 0]
 
 
 def load_level(filename):
-    filename = "data/" + filename
     with open(filename) as mapFile:
         level_map = [line.rstrip() for line in mapFile]
 
@@ -70,7 +69,7 @@ def generate_level(level):
 
 def load_image(name, colorkey=None):
     try:
-        image = pygame.image.load("data/" + name)
+        image = pygame.image.load(name)
     except Exception as exception:
         print("Cannot load image: {}".format(name))
         raise SystemExit(exception)
