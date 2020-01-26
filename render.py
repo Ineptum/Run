@@ -6,9 +6,11 @@ clock = pygame.time.Clock()
 fps = 60
 SCORE = [0, 0, 0]
 inverted = [0, 0]
+# pygame.mixer.pre_init(44100, 16, 2, 4096)
 
 
 def load_level(filename):
+    filename = "data/" + filename
     with open(filename) as mapFile:
         level_map = [line.rstrip() for line in mapFile]
 
@@ -69,7 +71,7 @@ def generate_level(level):
 
 def load_image(name, colorkey=None):
     try:
-        image = pygame.image.load(name)
+        image = pygame.image.load("data/" + name)
     except Exception as exception:
         print("Cannot load image: {}".format(name))
         raise SystemExit(exception)
@@ -486,7 +488,7 @@ def play(screen):
         player2.move(time_delta)
 
         if finished and playable:
-            result = ("Player" + str(finished[0]) + "has won!") if len(
+            result = "Player " + str(finished[0]) + "has won!" if len(
                 finished) == 1 else "draw!"
             playable = False
             SCORE[1] += 1 in finished
@@ -555,9 +557,8 @@ def finish_screen(outro_text, screen):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     terminate()
-                else:
-                    if event.key not in [pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d, pygame.K_i, pygame.K_j, pygame.K_k, pygame.K_l]:
-                        return next_level()
+                elif event.key == pygame.K_SPACE:
+                    return next_level()
 
         screen.fill((0, 0, 40))
         screen.blit(text_alpha, (0, 0))
@@ -567,13 +568,15 @@ def finish_screen(outro_text, screen):
 
 def next_level(gamestart=False):
     global finish, level, level_width, level_height, player1, player2, all_sprites, player_group, tile_group, finish_group, tile_width, displace, width
+    comp = pygame.mixer.Sound("data/bptsm.wav")
+    comp.play()
     level, level_width, level_height = load_level(levels[current_level])
 
     # display_info = pygame.display.Info()
     # width, height = ((display_info.current_h, display_info.current_h))
     width, height = 600, 600
     screen = pygame.display.set_mode((width, height), pygame.HWSURFACE |
-                                     pygame.DOUBLEBUF | pygame.FULLSCREEN)
+                                     pygame.DOUBLEBUF | pygame.RESIZABLE)
 
     width_fraction = 0.9
     displace = (width - int(width_fraction * width)) // 2
@@ -594,8 +597,8 @@ def next_level(gamestart=False):
 
     for sprite in all_sprites:
         sprite.rect.x += displace
-    finish_screen(["Game Over!", play(screen), str(SCORE[1]) + ": " + str(SCORE[2]),
-                   "Any button to continue"], screen)
+    finish_screen(["Game Over!", play(screen), str(SCORE[1]) + " : " + str(SCORE[2]),
+                   "SPACE to continue"], screen)
 
 
 if __name__ == "__main__":
@@ -603,5 +606,4 @@ if __name__ == "__main__":
     levels = ["level" + str(i) + ".txt" for i in range(1, 3)]
 
     pygame.init()
-
     next_level(gamestart=True)
