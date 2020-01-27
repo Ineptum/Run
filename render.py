@@ -566,9 +566,9 @@ def finish_screen(outro_text, screen):
 
 
 def next_level(gamestart=False):
-    global finish, level, level_width, level_height, player1, player2, all_sprites, player_group, tile_group, finish_group, tile_width, displace, width
-    comp = pygame.mixer.Sound("bptsm.wav")
-    comp.play()
+    global finish, level, level_width, level_height, player1, player2
+    global all_sprites, player_group, tile_group, finish_group
+    global tile_width, displace, width
     level, level_width, level_height = load_level(levels[current_level])
 
     # display_info = pygame.display.Info()
@@ -605,4 +605,6 @@ if __name__ == "__main__":
     levels = ["level" + str(i) + ".txt" for i in range(1, 3)]
 
     pygame.init()
+    pygame.mixer.music.load("bptsm.wav")
+    pygame.mixer.music.play(-1)
     next_level(gamestart=True)
