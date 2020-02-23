@@ -66,7 +66,7 @@ def start_screen(intro_text, screen, height):
                     if current_button == 1:
                         return
 
-        screen.fill((0, 0, 40))
+        screen.fill((0, 0, 0))
         pygame.draw.rect(screen, (255, 255, 255), buttons[current_button], 3)
         screen.blit(text_alpha, (0, 0))
         pygame.display.update()
@@ -109,7 +109,7 @@ def play(screen, height):
         alpha_surf.fill((255, 255, 255, 250),
                         special_flags=pygame.BLEND_RGBA_MULT)
         new_alpha = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
-        screen.fill((0, 0, 40))
+        screen.fill((0, 0, 0))
 
         if not player1.move(time_delta, player_group, tile_group,
                             all_sprites, alpha_surf, finish):
@@ -185,6 +185,9 @@ def play(screen, height):
 
 def finish_screen(outro_text, screen, height):
     global displace
+    new_alpha = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
+    new_alpha.blit(screen.copy(), (0, 0))
+
     background = pygame.transform.scale(
         load_image('empty.png'), screen.get_size())
     screen.blit(background, (0, 0))
@@ -207,7 +210,7 @@ def finish_screen(outro_text, screen, height):
         y += intro_rect.height
 
         text_alpha.blit(string_rendered, intro_rect)
-
+    y = 5
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -218,8 +221,12 @@ def finish_screen(outro_text, screen, height):
                 elif event.key == pygame.K_SPACE:
                     return next_level()
 
-        screen.fill((0, 0, 40))
+        screen.fill((0, 0, 0))
+        screen.blit(new_alpha, (0, y))
         screen.blit(text_alpha, (0, 0))
+        y += 3
+        new_alpha.fill((255, 255, 255, 255),
+                       special_flags=pygame.BLEND_RGBA_MULT)
         pygame.display.flip()
         clock.tick(fps)
 
@@ -231,7 +238,7 @@ def next_level(gamestart=False):
     level, level_width, level_height = load_level(
         levels[current_level % len(levels)])
 
-    width, height = 540, 540
+    width, height = 350, 350
     screen = pygame.display.set_mode((width, height), pygame.HWSURFACE |
                                      pygame.DOUBLEBUF | pygame.FULLSCREEN)
     pygame.display.set_caption("Run")
